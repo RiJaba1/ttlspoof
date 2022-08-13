@@ -11,6 +11,9 @@ fi
 col_green="\e[32m"
 col_end="\e[0m"
 
+
+read -rep $'Insert the interface to spoof: ' interfaz
+
 printf "${col_green}"
 cat << 'EOF'
 
@@ -88,8 +91,8 @@ if [ -v dict[$os] ];
 then
 	printf "\n${col_green}+${col_end} Spoofin *all* ipv4 ttl\n"
 	sysctl -q -w net.ipv4.ip_default_ttl="${dict[$os]}"
-	printf "${col_green}+${col_end} Spoofin eth0 ipv6 ttl\n"
-	sysctl -q -w net.ipv6.conf.eth0.hop_limit="${dict[$os]}"
+	printf "${col_green}+${col_end} Spoofin $interfaz ipv6 ttl\n"
+	sysctl -q -w net.ipv6.conf.$interfaz.hop_limit="${dict[$os]}"
 	printf "${col_green}+${col_end} Spoofin lo ipv6 ttl\n"
 	sysctl -q -w net.ipv6.conf.lo.hop_limit="${dict[$os]}"
 	printf "\nNow you look like $os OS\n"
